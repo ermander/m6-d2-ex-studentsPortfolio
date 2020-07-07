@@ -2,15 +2,27 @@ const { Schema, model } = require("mongoose")
 
 const studentSchema = new Schema(
   {
-    _id: String,
-    title: String,
-    author: String,
-    description: String,
-    year: Number,
-    genre: Array,
-    price: Number,
-  },
-  { _id: false } // Comunica a mongoDB di non creare l'id, che verrà creato da node,js
+      name: {
+          type: String,
+          required: true,
+      },
+      surname: {
+          type: String,
+          required: true,
+      },
+      email: {
+          type: String,
+          required: true,
+          lowercase: true,
+      },
+      dateOfBirth: {
+          type: String,
+          required: true,
+      },
+      country: {
+          type: String,
+          required: true,
+      }    
+  }
 )
-
 module.exports = model("students", studentSchema)

@@ -6,8 +6,8 @@ const studentsRouter = express.Router()
 
 studentsRouter.get("/", async (req, res, next) => {
   try {
-    const books = await BookSchema.find(req.query)
-    res.send(books)
+    const students = await studentSchema.find(req.query)
+    res.send(students)
   } catch (error) {
     next(error)
   }
@@ -16,9 +16,9 @@ studentsRouter.get("/", async (req, res, next) => {
 studentsRouter.get("/:id", async (req, res, next) => {
   try {
     const id = req.params.id
-    const book = await BookSchema.findById(id)
-    if (book) {
-      res.send(book)
+    const student = await studentSchema.findById(id)
+    if (student) {
+      res.send(student)
     } else {
       const error = new Error()
       error.httpStatusCode = 404
@@ -26,16 +26,20 @@ studentsRouter.get("/:id", async (req, res, next) => {
     }
   } catch (error) {
     console.log(error)
-    next("While reading books list a problem occurred!")
+    next("While reading students list a problem occurred!")
   }
 })
 
 studentsRouter.post("/", async (req, res, next) => {
   try {
-    const newbook = new BookSchema(req.body)
-    const { _id } = await newbook.save()
-
-    res.status(201).send(_id)
+    const checkEmail = req.body.email
+    if(!checkEmail){
+        const newstudent = new studentSchema(req.body)
+        const { _id } = await newstudent.save()
+        res.status(201).send(_id)
+    }else{
+        res.send("This email is already used, please try with another one")
+    }    
   } catch (error) {
     next(error)
   }
@@ -43,12 +47,12 @@ studentsRouter.post("/", async (req, res, next) => {
 
 studentsRouter.put("/:id", async (req, res, next) => {
   try {
-    const book = await BookSchema.findByIdAndUpdate(req.params.id, req.body)
-    console.log(book)
-    if (book) {
+    const student = await studentSchema.findByIdAndUpdate(req.params.id, req.body)
+    console.log(student)
+    if (student) {
       res.send("Ok")
     } else {
-      const error = new Error(`book with id ${req.params.id} not found`)
+      const error = new Error(`student with id ${req.params.id} not found`)
       error.httpStatusCode = 404
       next(error)
     }
@@ -59,11 +63,11 @@ studentsRouter.put("/:id", async (req, res, next) => {
 
 studentsRouter.delete("/:id", async (req, res, next) => {
   try {
-    const book = await BookSchema.findByIdAndDelete(req.params.id)
-    if (book) {
+    const student = await studentSchema.findByIdAndDelete(req.params.id)
+    if (student) {
       res.send("Deleted")
     } else {
-      const error = new Error(`book with id ${req.params.id} not found`)
+      const error = new Error(`student with id ${req.params.id} not found`)
       error.httpStatusCode = 404
       next(error)
     }

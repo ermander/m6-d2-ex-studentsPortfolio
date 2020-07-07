@@ -4,13 +4,13 @@ const { join } = require("path")
 const listEndpoints = require("express-list-endpoints")
 const mongoose = require("mongoose")
 
-const studentsRouter = require("./src/students/index.js")
+const studentsRouter = require("./services/students/index")
 
 const {
   notFoundHandler,
   badRequestHandler,
   genericErrorHandler,
-} = require("./errorHandlers")
+} = require("./errorHandler")
 
 const server = express()
 
