@@ -28,6 +28,8 @@
     "express-validator": "^6.6.0",
     "mongodb": "^3.5.9",
     "mongoose": "^5.9.22",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "query-to-mongo": "^0.10.1",
+    "validator": "^13.1.1"
   }
 }

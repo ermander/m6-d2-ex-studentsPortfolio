@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose")
+const v = require("validator")
 
 const studentSchema = new Schema(
   {
@@ -10,11 +11,6 @@ const studentSchema = new Schema(
           type: String,
           required: true,
       },
-      email: {
-          type: String,
-          required: true,
-          lowercase: true,
-      },
       dateOfBirth: {
           type: String,
           required: true,
@@ -22,7 +18,26 @@ const studentSchema = new Schema(
       country: {
           type: String,
           required: true,
-      }    
-  }
+      },    
+      email: {
+          type: String,
+          required: true,
+          lowercase: true,
+          validate: {
+            validator: async (value) => {
+              if (!v.isEmail(value)) {
+                throw new Error("Email is invalid")
+              } else {
+                const checkEmail = await StudentsModel.findOne({ email: value })
+                if (checkEmail) {
+                  throw new Error("Email already existant!")
+                }
+              }
+            },
+      }
+  },
+},
+{ timestamps: true }
 )
+const StudentsModel = model("Students", studentSchema)
 module.exports = model("students", studentSchema)

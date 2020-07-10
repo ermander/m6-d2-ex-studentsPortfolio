@@ -1,0 +1,29 @@
+.pinguImage{
+    width: 100vw;
+    height: 70vh;
+    margin: 0 0 0 0;
+    padding: 0 0 0 0 ; 
+}
+
+.jumbrotron{
+    margin: 0 0 0 0;
+    padding: 0 0 0 0 ;  
+}
+
+.studentCard{
+    margin: left 5%;
+    text-align: center;
+    align-self: center;
+}
+
+.profileImage{
+    height: 180px;
+    width: 180px;
+    position: relative;
+    left: 10vw;
+}
+
+.description{
+    position: relative;
+    left: -10vw;
+}

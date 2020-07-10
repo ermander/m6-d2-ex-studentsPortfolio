@@ -1,4 +1,5 @@
 const express = require("express")
+const q2m = require("query-to-mongo")
 
 const studentSchema = require("./schema.js")
 
@@ -6,8 +7,17 @@ const studentsRouter = express.Router()
 
 studentsRouter.get("/", async (req, res, next) => {
   try {
-    const students = await studentSchema.find(req.query)
-    res.send(students)
+    const query = q2m(req.query)
+    const students = await studentSchema.find(query.criteria, query.options.fields)
+    const total = await studentSchema.countDocuments()
+      .skip(query.options.skip) // Skippa i primi x risultati
+      .limit(query.options.limit) // Limita a x il numero di risultato
+      .sort(query.options.sort) // Decide l'ordine dei risultati
+    res.send({
+      students: students,
+      total: total,
+
+    })
   } catch (error) {
     next(error)
   }
@@ -32,15 +42,11 @@ studentsRouter.get("/:id", async (req, res, next) => {
 
 studentsRouter.post("/", async (req, res, next) => {
   try {
-    const checkEmail = req.body.email
-    if(!checkEmail){
         const newstudent = new studentSchema(req.body)
         const { _id } = await newstudent.save()
         res.status(201).send(_id)
-    }else{
-        res.send("This email is already used, please try with another one")
-    }    
-  } catch (error) {
+    }
+    catch (error) {
     next(error)
   }
 })
