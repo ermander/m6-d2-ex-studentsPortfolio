@@ -33,9 +33,10 @@ class Students extends Component {
                                 </Col>
                                 <Col xs={6} className="description">
                                     <h2>{student.name} {student.surname}</h2>
-                                    <h3>{student.country}</h3>
-                                    <h4>{student.email}</h4>
-                                    <h5>{student._id}</h5>
+                                    <h3>From: {student.country}</h3>
+                                    <h4>Contact: {student.email}</h4>
+                                    <h5>ID: {student._id}</h5>
+                                    <h5>Date of birth: {student.dateOfBirth}</h5>
                                     <p>Some quick example text to build on the card title and make up the bulk of
                                     the card's content.</p>
                                 </Col>    
