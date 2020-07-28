@@ -29,6 +29,7 @@ class CreateNewStudent extends Component {
 
     render() {
         return (
+            <>
             <Modal show={this.props.show} onHide={this.props.onClose}>
                 <Modal.Header closeButton>
                     <Modal.Title> Insert a new student! </Modal.Title>
@@ -81,6 +82,7 @@ class CreateNewStudent extends Component {
                     </Button>
                 </Modal.Footer>          
             </Modal>
+            </>
         );
     }
 }
